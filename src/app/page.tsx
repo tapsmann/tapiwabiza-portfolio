@@ -130,7 +130,7 @@ const projects: Project[] = [
     status: 'Live',
     link: 'https://martruther-dev.vercel.app',
     githubLink: null,
-    image: null,
+    image: '/projects/martruther.png',
     screenshots: [],
   },
   {
