@@ -55,27 +55,40 @@ To preview the built site locally:
 npm run preview
 ```
 
-## Cloudflare Pages deployment
+## Cloudflare Workers deployment
 
-This project is configured as a **static Next.js export**. In Cloudflare Pages use:
+This project is a **static Next.js export**. The `wrangler.jsonc` file points Wrangler at the generated `out/` directory and deliberately has no `main` field, so Wrangler deploys static assets only. Do not run OpenNext for this project.
+
+In Cloudflare Workers Builds use:
+
+| Setting | Value |
+| --- | --- |
+| Production branch | `main` |
+| Root directory | `/` |
+| Build command | `npm run build` |
+| Deploy command | `npx wrangler deploy` |
+| Build variables | None |
+
+Deploy locally with:
+
+```bash
+npm run build
+npx wrangler deploy
+```
+
+Cloudflare will provide a `*.workers.dev` URL after the first deployment. The Martruther website (`https://martruther-dev.vercel.app`) is listed as a portfolio project; it is not the portfolio deployment target.
+
+### Optional Cloudflare Pages deployment
+
+If you prefer Pages instead of Workers, use these settings:
 
 | Setting | Value |
 | --- | --- |
 | Framework preset | **Next.js (Static HTML Export)** |
-| Production branch | `main` |
 | Build command | `npm run build` |
 | Build output directory | `out` |
 
-Do **not** use `.next/standalone` for this project.
-
-Cloudflare will provide a `*.pages.dev` URL after the first deployment. The Martruther website (`https://martruther-dev.vercel.app`) is listed as a portfolio project; it is not the portfolio deployment target.
-
-### Optional Wrangler deployment
-
-```bash
-npm run build
-npx wrangler pages deploy out --project-name=tapiwabiza-portfolio
-```
+Do **not** use `.next/standalone` or OpenNext for this static export.
 
 ## Project Structure
 

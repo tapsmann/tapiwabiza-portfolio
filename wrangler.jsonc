@@ -1,0 +1,14 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "tapiwabiza-portfolio",
+  // Set to the date this configuration was added.
+  "compatibility_date": "2026-11-26",
+  // Static export only: no Worker script (`main`) is needed.
+  "assets": {
+    "directory": "./out",
+    "not_found_handling": "404-page"
+  },
+  "observability": {
+    "enabled": true
+  }
+}

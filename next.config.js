@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
 
-  // This portfolio is static. Cloudflare Pages serves the generated `out/` directory.
+  // This portfolio is static. Cloudflare Workers serves the generated `out/` directory.
   output: 'export',
   trailingSlash: true,
 
