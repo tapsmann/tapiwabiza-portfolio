@@ -108,7 +108,18 @@ const experience = [
   },
 ]
 
-const projects = [
+type Project = {
+  name: string
+  description: string
+  tech: string[]
+  status: string
+  link: string
+  githubLink: string | null
+  image: string | null
+  screenshots: { src: string; label: string }[]
+}
+
+const projects: Project[] = [
   {
     name: 'Martruther Logistics Website',
     description:
@@ -118,6 +129,7 @@ const projects = [
     link: 'https://martruther-dev.vercel.app',
     githubLink: null,
     image: null,
+    screenshots: [],
   },
   {
     name: 'Prospira-Edu Educational Platform',
@@ -128,6 +140,7 @@ const projects = [
     link: 'https://prospira-edu.vercel.app',
     githubLink: null,
     image: '/projects/prospira-edu.png',
+    screenshots: [],
   },
   {
     name: 'ZimParks Anti-Poaching System',
@@ -137,7 +150,12 @@ const projects = [
     status: 'Live Demo',
     link: 'https://anti-poaching-system.vercel.app',
     githubLink: null,
-    image: '/projects/anti-poaching-system.png',
+    image: '/projects/anti-poaching-dashboard.png',
+    screenshots: [
+      { src: '/projects/anti-poaching-analytics.png', label: 'Analytics' },
+      { src: '/projects/anti-poaching-incidents.png', label: 'Incidents' },
+      { src: '/projects/anti-poaching-poachers.png', label: 'Poachers' },
+    ],
   },
   {
     name: 'Destiny for Women Zimbabwe',
@@ -148,6 +166,7 @@ const projects = [
     link: 'https://tapsmann.github.io/destiny-for-women.org',
     githubLink: null,
     image: '/projects/destiny-for-women.png',
+    screenshots: [],
   },
 ]
 
@@ -497,6 +516,28 @@ export default function Home() {
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-dark-950/30 via-transparent to-transparent" />
                 </div>
+
+                {project.screenshots.length > 0 && (
+                  <div className="mb-5 grid grid-cols-3 gap-2">
+                    {project.screenshots.map((screenshot, screenshotIndex) => (
+                      <div
+                        key={screenshotIndex}
+                        className="relative aspect-[16/9] overflow-hidden rounded-lg border border-white/60 dark:border-white/10"
+                      >
+                        <Image
+                          src={screenshot.src}
+                          alt={`${project.name} ${screenshot.label} screenshot`}
+                          fill
+                          sizes="(max-width: 768px) 33vw, 180px"
+                          className="object-cover object-top transition-transform duration-500 hover:scale-105"
+                        />
+                        <span className="absolute bottom-1 left-1 rounded-md border border-white/40 bg-white/70 px-1.5 py-0.5 text-[10px] font-medium text-dark-700 backdrop-blur-md dark:border-white/10 dark:bg-dark-950/70 dark:text-white">
+                          {screenshot.label}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
 
                 <div className="mb-3 flex flex-wrap items-center gap-2">
                   {project.status === 'Live' && (
