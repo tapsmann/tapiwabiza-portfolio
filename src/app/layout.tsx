@@ -1,17 +1,22 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-})
 
 export const metadata: Metadata = {
   title: 'Tapiwa Jairos Biza | Computing Student & Developer',
-  description: "Portfolio of Tapiwa Jairos Biza - Computing student at University of Greenwich, web developer, IT support specialist. Showcasing projects in web development, database design, and problem-solving.",
-  keywords: ['Tapiwa Biza', 'web developer', 'computing student', 'University of Greenwich', 'IT support', 'JavaScript', 'HTML', 'CSS', 'SQL', 'portfolio'],
+  description:
+    'Portfolio of Tapiwa Jairos Biza - Computing student at the University of Greenwich, web developer, and IT support specialist. Showcasing projects in web development, database design, and problem-solving.',
+  keywords: [
+    'Tapiwa Biza',
+    'web developer',
+    'computing student',
+    'University of Greenwich',
+    'IT support',
+    'JavaScript',
+    'HTML',
+    'CSS',
+    'SQL',
+    'portfolio',
+  ],
   authors: [{ name: 'Tapiwa Jairos Biza' }],
   creator: 'Tapiwa Jairos Biza',
   publisher: 'Tapiwa Jairos Biza',
@@ -19,18 +24,15 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://martruther-dev.vercel.app',
     title: 'Tapiwa Jairos Biza | Portfolio',
-    description: "Computing student & developer portfolio showcasing projects in web development, IT support, and database management.",
+    description:
+      'Computing student and developer portfolio showcasing projects in web development, IT support, and database management.',
     siteName: 'Tapiwa Biza Portfolio',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Tapiwa Jairos Biza | Portfolio',
-    description: 'Computing student & developer portfolio',
-  },
-  verification: {
-    google: 'google-site-verification-code',
+    description: 'Computing student and developer portfolio',
   },
 }
 
@@ -50,14 +52,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} antialiased`}>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      </head>
-      <body className="bg-white text-dark-900">
-        {children}
-      </body>
+    <html lang="en" className="antialiased">
+      <body className="bg-white font-sans text-dark-900">{children}</body>
     </html>
   )
 }

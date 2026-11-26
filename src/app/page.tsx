@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, type FormEvent } from 'react'
 import Link from 'next/link'
 import {
   Mail,
@@ -8,19 +8,15 @@ import {
   MapPin,
   Github,
   Linkedin,
-  Globe,
   Code,
   Database,
   Server,
   Wrench,
   Award,
   GraduationCap,
-  Briefcase,
-  Projector,
   BookOpen,
   Shield,
   Zap,
-  Rocket,
   Menu,
   X,
   ChevronDown,
@@ -37,7 +33,6 @@ const personalInfo = {
   phone: '+263 78 258 5268 / +263 77 278 9236',
   email: 'tapiwajairosbiza@gmail.com',
   github: 'github.com/tapsmann',
-  website: 'https://martruther-dev.vercel.app',
   summary: "I'm Tapiwa, a Computing student at the University of Greenwich with a passion for building web applications and solving real-world problems. I combine hands-on experience in IT technical support, web development, and database management with AWS networking certification. I thrive on turning complex challenges into elegant digital solutions, and I'm always eager to learn new technologies and frameworks.",
 }
 
@@ -114,28 +109,31 @@ const experience = [
 
 const projects = [
   {
+    name: 'Martruther Logistics Website',
+    description:
+      'Designed and developed a modern, responsive website for Martruther Logistics Pvt Ltd, presenting the company’s services with clear navigation and mobile-friendly layouts.',
+    tech: ['HTML', 'CSS', 'JavaScript', 'Web Development'],
+    status: 'Live',
+    link: 'https://martruther-dev.vercel.app',
+    githubLink: null,
+  },
+  {
     name: 'Prospira-Edu Educational Platform',
-    description: 'Built an interactive educational website using HTML, CSS, JavaScript, and SQL. Designed database structures for user management and content delivery. The platform enables educators to create, manage, and deliver content effectively.',
+    description:
+      'Built an interactive educational website using HTML, CSS, JavaScript, and SQL. Designed database structures for user management and content delivery so educators can manage and share learning materials.',
     tech: ['HTML', 'CSS', 'JavaScript', 'SQL'],
     status: 'Completed',
-    link: 'https://prospira-edu.vercel.app',
-    githubLink: 'https://github.com/tapsmann/prospira-edu',
+    link: null,
+    githubLink: null,
   },
   {
     name: 'Anti-Poaching Detection System',
-    description: 'Developed a system to detect and prevent wildlife poaching activities. Applied programming, data analysis, and system design to address a real-world conservation challenge. Used machine learning concepts to identify suspicious patterns in wildlife reserve data.',
+    description:
+      'Developed an academic system to detect and prevent wildlife poaching activities, applying programming, data analysis, and system design to a real-world conservation challenge.',
     tech: ['Programming', 'Data Analysis', 'System Design'],
     status: 'Academic Project',
     link: null,
-    githubLink: 'https://github.com/tapsmann/anti-poaching-detection',
-  },
-  {
-    name: 'Destiny for Women Zimbabwe Website',
-    description: 'Developed and deployed a fully functional NGO website using HTML, CSS, and GitHub Pages. Created a platform to support women\'s empowerment initiatives and provide resources for education and training.',
-    tech: ['HTML', 'CSS', 'GitHub Pages'],
-    status: 'Live',
-    link: 'https://tapsmann.github.io/destiny-for-women.org',
-    githubLink: 'https://github.com/tapsmann/destiny-for-women.org',
+    githubLink: null,
   },
 ]
 
@@ -236,6 +234,22 @@ export default function Home() {
     }
   }
 
+  const handleContactSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const formData = new FormData(event.currentTarget)
+    const name = String(formData.get('name') || '').trim()
+    const from = String(formData.get('email') || '').trim()
+    const subject = String(formData.get('subject') || '').trim()
+    const message = String(formData.get('message') || '').trim()
+
+    const emailSubject = encodeURIComponent(`Portfolio enquiry: ${subject}`)
+    const emailBody = encodeURIComponent(
+      `Name: ${name}\nEmail: ${from}\n\n${message}`,
+    )
+
+    window.location.href = `mailto:${personalInfo.email}?subject=${emailSubject}&body=${emailBody}`
+  }
+
   const navItems = [
     { id: 'home', label: 'Home' },
     { id: 'about', label: 'About' },
@@ -256,7 +270,7 @@ export default function Home() {
       >
         <div className="container-custom">
           <div className="flex items-center justify-between h-16 lg:h-20">
-            <Link href="#" className="text-xl font-bold text-dark-900 dark:text-white" aria-label="Home">
+            <Link href="#home" className="text-xl font-bold text-dark-900 dark:text-white" aria-label="Home">
               TJB
             </Link>
 
@@ -290,7 +304,7 @@ export default function Home() {
               <button
                 onClick={() => setIsDark(!isDark)}
                 className="p-2 rounded-lg text-dark-600 dark:text-dark-300 hover:bg-dark-100 dark:hover:bg-dark-800 transition-colors"
-                aria-label={isDark ? 'Switch to light mode' : 'Switch to light mode'}
+                aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
               >
                 {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
               </button>
@@ -311,7 +325,7 @@ export default function Home() {
       <section id="home" className="min-h-screen flex items-center justify-center pt-16 lg:pt-20">
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <div className="animate-fade-in animate-slide-up">
+            <div className="animate-slide-up">
               <p className="text-primary-600 dark:text-primary-400 font-medium mb-4">Computing Student & Developer</p>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-dark-900 dark:text-white leading-tight mb-6">
                 Tapiwa Jairos Biza
@@ -354,7 +368,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="relative animate-fade-in animate-delay-200 animate-slide-up">
+            <div className="relative animate-slide-up animate-delay-200">
               <div className="relative z-10">
                 <div className="aspect-square max-w-md mx-auto bg-gradient-to-br from-primary-100 to-primary-200 dark:from-primary-900/30 dark:to-primary-800/30 rounded-3xl border border-primary-200 dark:border-primary-800 flex items-center justify-center">
                   <div className="text-center p-8">
@@ -402,8 +416,7 @@ export default function Home() {
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="section-title">Featured Projects</h2>
             <p className="section-subtitle">
-              Selected projects demonstrating web development, database design, and problem-solving skills. 
-              I curate 3-5 polished projects (not tutorial clones) that showcase different skills and technologies.
+              A focused selection of work that demonstrates web development, database design, and practical problem-solving.
             </p>
           </div>
 
@@ -451,9 +464,9 @@ export default function Home() {
                     <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1 group-hover:translate-y-[-1px]" />
                   </a>
                 )}
-                {project.link && (
+                {project.githubLink && (
                   <a
-                    href={project.githubLink || project.link}
+                    href={project.githubLink}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-xs font-medium text-primary-500 dark:text-primary-400 hover:text-primary-300 transition-colors group mt-2"
@@ -474,7 +487,7 @@ export default function Home() {
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="section-title">About Me</h2>
             <p className="section-subtitle">
-              I'm Tapiwa, a Computing student at the University of Greenwich with a passion for building web applications and solving real-world problems. I combine hands-on experience in IT technical support, web development, and database management with AWS networking certification. I thrive on turning complex challenges into elegant digital solutions, and I'm always eager to learn new technologies and frameworks.
+              I’m Tapiwa, a Computing student at the University of Greenwich with a passion for building web applications and solving real-world problems. I combine hands-on experience in IT technical support, web development, and database management with AWS networking certification. I thrive on turning complex challenges into elegant digital solutions, and I’m always eager to learn new technologies and frameworks.
             </p>
           </div>
 
@@ -642,7 +655,7 @@ export default function Home() {
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="section-title">Get In Touch</h2>
             <p className="section-subtitle">
-              I'm currently seeking an ICT Attachment opportunity and open to discussing web development projects. Feel free to reach out!
+              I’m currently seeking an ICT Attachment opportunity and open to discussing web development projects. Feel free to reach out!
             </p>
           </div>
 
@@ -702,22 +715,13 @@ export default function Home() {
                     <Linkedin className="w-4 h-4 group-hover:scale-110 transition-transform" />
                     LinkedIn
                   </a>
-                  <a
-                    href="https://martruther-dev.vercel.app"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 bg-dark-100 dark:bg-dark-800 text-dark-700 dark:text-dark-300 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/30 hover:text-primary-700 dark:hover:text-primary-400 transition-colors group"
-                  >
-                    <Globe className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                    Portfolio Site
-                  </a>
                 </div>
               </div>
             </div>
 
             <div className="card">
               <h3 className="text-lg font-semibold text-dark-900 dark:text-white mb-4">Send a Message</h3>
-              <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+              <form className="space-y-4" onSubmit={handleContactSubmit}>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-dark-700 dark:text-dark-300 mb-1">

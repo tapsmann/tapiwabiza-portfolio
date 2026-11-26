@@ -1,130 +1,98 @@
 # Tapiwa Jairos Biza - Portfolio
 
-A modern, responsive portfolio website built with Next.js 14, TypeScript, and Tailwind CSS.
+A modern, responsive, static portfolio website built with Next.js 14, TypeScript, and Tailwind CSS.
 
 ## Features
 
-- **Modern Design**: Clean, professional design with dark/light mode support
-- **Fully Responsive**: Works seamlessly on desktop, tablet, and mobile
-- **Smooth Animations**: Framer Motion-like animations using CSS
-- **Accessible**: Semantic HTML, proper ARIA labels, keyboard navigation
-- **SEO Optimized**: Meta tags, Open Graph, Twitter Cards
-- **TypeScript**: Full type safety throughout the codebase
+- Modern, professional design with dark/light mode
+- Fully responsive layout for desktop, tablet, and mobile
+- CSS-based animations with no extra UI animation dependency
+- Semantic HTML, labels, and ARIA attributes
+- SEO metadata, Open Graph, and Twitter card tags
+- TypeScript type checking and Next.js ESLint rules
 
 ## Tech Stack
 
-- **Framework**: Next.js 14 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **Icons**: Lucide React
-- **Font**: Inter (via next/font)
+- **Framework:** Next.js 14 App Router (static export)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Icons:** Lucide React
+- **Font:** System font stack with Inter as the preferred local font
 
 ## Getting Started
 
 ### Prerequisites
 
 - Node.js 18.17 or later
-- npm, yarn, or pnpm
+- npm
 
-### Installation
+### Install and run locally
 
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd tapiwa-biza-portfolio
-```
-
-2. Install dependencies:
 ```bash
 npm install
-# or
-yarn install
-# or
-pnpm install
-```
-
-3. Run the development server:
-```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000).
 
-### Build for Production
+### Verify the project
+
+```bash
+npm run typecheck
+npm run lint
+npm run build
+```
+
+The production build writes static files to `out/`.
+
+To preview the built site locally:
+
+```bash
+npm run preview
+```
+
+## Cloudflare Pages deployment
+
+This project is configured as a **static Next.js export**. In Cloudflare Pages use:
+
+| Setting | Value |
+| --- | --- |
+| Framework preset | **Next.js (Static HTML Export)** |
+| Production branch | `main` |
+| Build command | `npm run build` |
+| Build output directory | `out` |
+
+Do **not** use `.next/standalone` for this project.
+
+Cloudflare will provide a `*.pages.dev` URL after the first deployment. The Martruther website (`https://martruther-dev.vercel.app`) is listed as a portfolio project; it is not the portfolio deployment target.
+
+### Optional Wrangler deployment
 
 ```bash
 npm run build
-npm start
+npx wrangler pages deploy out --project-name=tapiwabiza-portfolio
 ```
 
 ## Project Structure
 
-```
+```text
 src/
 ├── app/
-│   ├── globals.css      # Global styles & Tailwind imports
-│   ├── layout.tsx       # Root layout with metadata
-│   └── page.tsx         # Main portfolio page
-├── components/          # Reusable components (future use)
+│   ├── globals.css      # Global styles and Tailwind imports
+│   ├── layout.tsx       # Root layout and metadata
+│   └── page.tsx         # Portfolio page and content data
+├── components/          # Reusable components
 public/                  # Static assets
 ```
 
 ## Customization
 
-### Personal Information
+Edit the data objects at the top of `src/app/page.tsx` to update personal information, skills, experience, projects, education, certifications, and languages.
 
-Edit the data objects in `src/app/page.tsx`:
-- `personalInfo` - Name, title, contact details, summary
-- `skills` - Technical skills organized by category
-- `experience` - Work experience entries
-- `projects` - Portfolio projects
-- `education` - Educational background
-- `certifications` - Professional certifications
-- `languages` - Language proficiencies
-
-### Colors & Theme
-
-Modify `tailwind.config.ts` to customize:
-- Color palette (primary, dark)
-- Font families
-- Animations
-- Breakpoints
-
-### Styling
-
-Global styles in `src/app/globals.css` include:
-- CSS variables for theming
-- Custom component classes
-- Utility classes
-- Keyframe animations
-
-## Deployment
-
-### Vercel (Recommended)
-
-1. Push to GitHub
-2. Import project in Vercel
-3. Deploy automatically
-
-### Other Platforms
-
-The app can be deployed to any platform supporting Node.js:
-- Netlify
-- AWS Amplify
-- DigitalOcean App Platform
-- Self-hosted VPS
-
-## License
-
-MIT License - feel free to use this as a template for your own portfolio.
+Colors, fonts, and animations are configured in `tailwind.config.ts`. Global component classes are in `src/app/globals.css`.
 
 ## Contact
 
-- **Email**: tapiwajairosbiza@gmail.com
-- **Phone**: +263 78 258 5268 / +263 77 278 9236
-- **GitHub**: [github.com/tapsmann](https://github.com/tapsmann)
-- **Portfolio**: [tapsmann.github.io/destiny-for-women.org](https://tapsmann.github.io/destiny-for-women.org)
+- **Email:** tapiwajairosbiza@gmail.com
+- **Phone:** +263 78 258 5268 / +263 77 278 9236
+- **GitHub:** [github.com/tapsmann](https://github.com/tapsmann)
