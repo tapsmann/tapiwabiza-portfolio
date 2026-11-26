@@ -36,13 +36,13 @@ const personalInfo = {
   phone: '+263 78 258 5268 / +263 77 278 9236',
   email: 'tapiwajairosbiza@gmail.com',
   github: 'github.com/tapsmann',
-  summary: "I'm Tapiwa, a Computing student at the University of Greenwich with a passion for building web applications and solving real-world problems. I combine hands-on experience in IT technical support, web development, and database management with AWS networking certification. I thrive on turning complex challenges into elegant digital solutions, and I'm always eager to learn new technologies and frameworks.",
+  summary: "I'm Tapiwa, a Computing student and Advanced UK Diploma holder with a passion for building web applications and solving real-world problems. I combine hands-on experience in IT technical support, web development, and database management with AWS certifications in Cloud services and basic Networking. I thrive on turning complex challenges into elegant digital solutions, and I'm always eager to learn new technologies and frameworks.",
 }
 
 const skills = {
   'Programming & Web': [
-    { name: 'HTML', level: 'Expert' },
-    { name: 'CSS', level: 'Expert' },
+    { name: 'HTML', level: 'Advanced' },
+    { name: 'CSS', level: 'Advanced' },
     { name: 'JavaScript', level: 'Intermediate' },
     { name: 'SQL', level: 'Intermediate' },
     { name: 'Python (Foundational)', level: 'Beginner' },
@@ -56,20 +56,20 @@ const skills = {
   'Networking': [
     { name: 'Network Security Fundamentals', level: 'Intermediate' },
     { name: 'Protocols', level: 'Beginner' },
-    { name: 'AWS Educate Certified', level: 'Expert' },
+    { name: 'AWS Educate Certified', level: 'Intermediate' },
   ],
   'Tools & Platforms': [
     { name: 'GitHub', level: 'Expert' },
-    { name: 'Version Control', level: 'Expert' },
+    { name: 'Version Control', level: 'Intermediate' },
     { name: 'Microsoft Office Suite', level: 'Intermediate' },
-    { name: 'Windows', level: 'Intermediate' },
+    { name: 'Windows', level: 'Advanced' },
     { name: 'Linux (Familiar)', level: 'Beginner' },
   ],
   'Core Competencies': [
-    { name: 'Troubleshooting', level: 'Expert' },
+    { name: 'Troubleshooting', level: 'Intermediate' },
     { name: 'Process Automation', level: 'Intermediate' },
-    { name: 'Documentation', level: 'Intermediate' },
-    { name: 'Team Collaboration', level: 'Intermediate' },
+    { name: 'Documentation', level: 'Advanced' },
+    { name: 'Team Collaboration', level: 'Advanced' },
   ],
 }
 
