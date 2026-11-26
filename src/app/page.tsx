@@ -21,7 +21,9 @@ import {
   Menu,
   X,
   ChevronDown,
+  ChevronRight,
   ArrowUpRight,
+  Globe2,
   Sun,
   Moon,
 } from 'lucide-react'
@@ -170,6 +172,12 @@ const projects: Project[] = [
   },
 ]
 
+const quickFacts = [
+  { icon: Database, title: 'SQL', subtitle: 'Databases' },
+  { icon: Server, title: 'AWS', subtitle: 'Networking' },
+  { icon: Wrench, title: 'IT Support', subtitle: 'Troubleshooting' },
+]
+
 const education = [
   {
     degree: 'BSc Degree in Computing',
@@ -305,13 +313,8 @@ export default function Home() {
 
   return (
     <div className="relative isolate min-h-screen overflow-hidden bg-slate-50 transition-colors duration-300 dark:bg-dark-950">
-      {/* Glassmorphism background */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute -left-40 -top-40 h-[32rem] w-[32rem] rounded-full bg-primary-300/40 blur-3xl dark:bg-primary-800/25" />
-        <div className="absolute -right-52 top-1/4 h-[36rem] w-[36rem] rounded-full bg-cyan-300/30 blur-3xl dark:bg-cyan-700/20" />
-        <div className="absolute -bottom-40 left-1/3 h-[30rem] w-[30rem] rounded-full bg-violet-300/30 blur-3xl dark:bg-violet-700/20" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.55),transparent_55%)] dark:bg-[radial-gradient(circle_at_top,rgba(148,163,184,0.08),transparent_55%)]" />
-      </div>
+      {/* Blue water inspired gradient background */}
+      <div aria-hidden="true" className="water-background pointer-events-none absolute inset-0 -z-10" />
 
       {/* Navigation */}
       <nav
@@ -441,9 +444,9 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="relative animate-slide-up animate-delay-200">
+            <div className="relative isolate animate-slide-up animate-delay-200">
               <div className="relative z-10">
-                <div className="glass-panel mx-auto flex aspect-square max-w-md items-center justify-center rounded-3xl bg-gradient-to-br from-primary-100/70 to-primary-200/50 dark:from-primary-900/30 dark:to-primary-800/20">
+                <div className="glass-panel mx-auto flex aspect-square max-w-md items-center justify-center rounded-3xl bg-gradient-to-br from-primary-100/80 via-sky-100/60 to-cyan-100/50 dark:from-primary-900/40 dark:via-sky-900/25 dark:to-cyan-900/20">
                   <div className="text-center p-8">
                     <Code className="w-24 h-24 mx-auto mb-4 text-primary-600 dark:text-primary-400 opacity-80" />
                     <p className="text-lg font-medium text-dark-700 dark:text-dark-300">Full Stack Developer</p>
@@ -451,27 +454,46 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              {/* Floating skill badges */}
-              <div className="absolute -top-4 -right-4 w-32 h-32">
-                <div className="absolute top-0 right-0 w-24 h-24 glass-panel rounded-2xl p-3 animate-fade-in animate-delay-300">
-                  <Database className="w-5 h-5 text-primary-600 dark:text-primary-400 mb-1" />
+
+              {/* Floating skill tiles on larger screens */}
+              <div className="pointer-events-none absolute -right-5 -top-5 z-20 hidden h-32 w-32 lg:block">
+                <div className="skill-tile absolute right-0 top-0 h-24 w-24 animate-fade-in" style={{ animationDelay: '300ms' }}>
+                  <Database className="mb-1 h-5 w-5 text-primary-600 dark:text-primary-400" />
                   <p className="text-xs font-medium text-dark-900 dark:text-white">SQL</p>
                   <p className="text-[10px] text-dark-500 dark:text-dark-400">Databases</p>
                 </div>
               </div>
-              <div className="absolute bottom-4 -left-4 w-32 h-32">
-                <div className="absolute bottom-0 left-0 w-24 h-24 glass-panel rounded-2xl p-3 animate-fade-in animate-delay-400">
-                  <Server className="w-5 h-5 text-primary-600 dark:text-primary-400 mb-1" />
+              <div className="pointer-events-none absolute -bottom-5 -left-5 z-20 hidden h-32 w-32 lg:block">
+                <div className="skill-tile absolute bottom-0 left-0 h-24 w-24 animate-fade-in" style={{ animationDelay: '400ms' }}>
+                  <Server className="mb-1 h-5 w-5 text-primary-600 dark:text-primary-400" />
                   <p className="text-xs font-medium text-dark-900 dark:text-white">AWS</p>
                   <p className="text-[10px] text-dark-500 dark:text-dark-400">Networking</p>
                 </div>
               </div>
-              <div className="absolute top-1/2 right-0 w-32 h-32">
-                <div className="absolute top-1/2 right-0 w-24 h-24 glass-panel rounded-2xl p-3 animate-fade-in animate-delay-500">
-                  <Wrench className="w-5 h-5 text-primary-600 dark:text-primary-400 mb-1" />
+              <div className="pointer-events-none absolute -right-5 top-1/2 z-20 hidden h-32 w-32 -translate-y-1/2 lg:block">
+                <div className="skill-tile absolute right-0 top-1/2 h-24 w-24 -translate-y-1/2 animate-fade-in" style={{ animationDelay: '500ms' }}>
+                  <Wrench className="mb-1 h-5 w-5 text-primary-600 dark:text-primary-400" />
                   <p className="text-xs font-medium text-dark-900 dark:text-white">IT Support</p>
                   <p className="text-[10px] text-dark-500 dark:text-dark-400">Troubleshooting</p>
                 </div>
+              </div>
+
+              {/* Always-visible tiles on tablet and mobile */}
+              <div className="mx-auto mt-6 grid max-w-md grid-cols-3 gap-3 lg:hidden">
+                {quickFacts.map((fact, index) => {
+                  const Icon = fact.icon
+                  return (
+                    <div
+                      key={fact.title}
+                      className="skill-tile h-24 animate-fade-in"
+                      style={{ animationDelay: `${300 + index * 100}ms` }}
+                    >
+                      <Icon className="mb-1 h-5 w-5 text-primary-600 dark:text-primary-400" />
+                      <p className="text-xs font-medium text-dark-900 dark:text-white">{fact.title}</p>
+                      <p className="text-[10px] text-dark-500 dark:text-dark-400">{fact.subtitle}</p>
+                    </div>
+                  )
+                })}
               </div>
             </div>
           </div>
@@ -919,27 +941,152 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-dark-950 text-dark-400 py-12">
-        <div className="container-custom">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-center md:text-left">
-              <p className="font-bold text-white text-lg">TJB</p>
-              <p className="text-sm mt-1">Tapiwa Jairos Biza</p>
+      <footer className="relative border-t border-white/60 bg-white/50 backdrop-blur-xl dark:border-white/10 dark:bg-dark-950/80">
+        <div className="container-custom py-14">
+          <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+            <div className="glass-panel p-6">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-primary-600 to-sky-500 text-white shadow-lg shadow-primary-600/20">
+                <Code className="h-5 w-5" />
+              </div>
+              <h2 className="mt-4 text-lg font-bold text-dark-900 dark:text-white">{personalInfo.name}</h2>
+              <p className="mt-1 text-sm font-medium text-primary-600 dark:text-primary-400">{personalInfo.title}</p>
+              <p className="mt-3 text-sm leading-relaxed text-dark-600 dark:text-dark-300">
+                Building practical web applications and supporting the systems behind them.
+              </p>
+              <div className="mt-5 flex flex-wrap gap-2">
+                <a
+                  href="https://github.com/tapsmann"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="glass-chip h-9 w-9 justify-center p-0"
+                  aria-label="GitHub"
+                >
+                  <Github className="h-4 w-4" />
+                </a>
+                <a
+                  href="https://linkedin.com/in/tapiwa-biza"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="glass-chip h-9 w-9 justify-center p-0"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin className="h-4 w-4" />
+                </a>
+                <a
+                  href="mailto:tapiwajairosbiza@gmail.com"
+                  className="glass-chip h-9 w-9 justify-center p-0"
+                  aria-label="Email"
+                >
+                  <Mail className="h-4 w-4" />
+                </a>
+              </div>
             </div>
-            <div className="flex items-center gap-6">
-              <a href="https://github.com/tapsmann" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors" aria-label="GitHub">
-                <Github className="w-5 h-5" />
-              </a>
-              <a href="https://linkedin.com/in/tapiwa-biza" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors" aria-label="LinkedIn">
-                <Linkedin className="w-5 h-5" />
-              </a>
-              <a href="mailto:tapiwajairosbiza@gmail.com" className="hover:text-white transition-colors" aria-label="Email">
-                <Mail className="w-5 h-5" />
-              </a>
+
+            <div>
+              <h3 className="mb-4 flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-dark-900 dark:text-white">
+                <ChevronRight className="h-4 w-4 text-primary-600 dark:text-primary-400" />
+                Pages
+              </h3>
+              <ul className="space-y-2">
+                {navItems.map((item) => (
+                  <li key={item.id}>
+                    <button onClick={() => scrollToSection(item.id)} className="footer-link">
+                      <ChevronRight className="h-3.5 w-3.5 text-primary-500 dark:text-primary-400" />
+                      {item.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <p className="text-sm text-center md:text-right">
-              © {new Date().getFullYear()} Tapiwa Jairos Biza. All rights reserved.
-            </p>
+
+            <div>
+              <h3 className="mb-4 flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-dark-900 dark:text-white">
+                <Globe2 className="h-4 w-4 text-primary-600 dark:text-primary-400" />
+                Projects
+              </h3>
+              <ul className="space-y-2">
+                {projects
+                  .filter((project) => project.link)
+                  .map((project) => (
+                    <li key={project.name}>
+                      <a
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="footer-link items-start leading-snug"
+                      >
+                        <ArrowUpRight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary-500 dark:text-primary-400" />
+                        {project.name}
+                      </a>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="mb-4 flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-dark-900 dark:text-white">
+                <Mail className="h-4 w-4 text-primary-600 dark:text-primary-400" />
+                Contact
+              </h3>
+              <ul className="space-y-3">
+                <li>
+                  <a href="mailto:tapiwajairosbiza@gmail.com" className="footer-link break-all">
+                    <Mail className="h-4 w-4 shrink-0 text-primary-500 dark:text-primary-400" />
+                    {personalInfo.email}
+                  </a>
+                </li>
+                <li>
+                  <a href="tel:+263782585268" className="footer-link">
+                    <Phone className="h-4 w-4 shrink-0 text-primary-500 dark:text-primary-400" />
+                    {personalInfo.phone}
+                  </a>
+                </li>
+                <li>
+                  <div className="footer-link items-start leading-snug">
+                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary-500 dark:text-primary-400" />
+                    {personalInfo.location}
+                  </div>
+                </li>
+              </ul>
+              <div className="mt-5 border-t border-white/60 pt-4 dark:border-white/10">
+                <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-dark-500 dark:text-dark-400">
+                  Available on
+                </p>
+                <div className="space-y-2">
+                  <a
+                    href="https://github.com/tapsmann"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer-link"
+                  >
+                    <Github className="h-4 w-4 text-primary-500 dark:text-primary-400" />
+                    GitHub
+                    <span className="text-dark-400 dark:text-dark-500">/ tapsmann</span>
+                  </a>
+                  <a
+                    href="https://linkedin.com/in/tapiwa-biza"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer-link"
+                  >
+                    <Linkedin className="h-4 w-4 text-primary-500 dark:text-primary-400" />
+                    LinkedIn
+                    <span className="text-dark-400 dark:text-dark-500">/ tapiwa-biza</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/60 pt-6 text-sm text-dark-500 dark:text-dark-400 sm:flex-row">
+            <p>© {new Date().getFullYear()} Tapiwa Jairos Biza. All rights reserved.</p>
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="footer-link"
+            >
+              Back to top
+              <ArrowUpRight className="h-4 w-4 -rotate-45" />
+            </button>
           </div>
         </div>
       </footer>

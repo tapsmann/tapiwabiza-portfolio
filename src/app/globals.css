@@ -56,6 +56,57 @@
     @apply inline-flex items-center rounded-full border border-white/60 bg-white/60 px-3 py-1 text-xs font-medium text-dark-600 backdrop-blur-md dark:border-white/10 dark:bg-white/5 dark:text-dark-300;
   }
 
+  .skill-tile {
+    @apply relative z-20 rounded-2xl border border-white/80 bg-white/80 p-3 shadow-xl shadow-sky-900/10 backdrop-blur-xl dark:border-sky-300/20 dark:bg-slate-900/80 dark:shadow-black/40;
+  }
+
+  .footer-link {
+    @apply inline-flex items-center gap-2 text-sm text-dark-600 transition-colors hover:text-primary-600 dark:text-dark-300 dark:hover:text-primary-300;
+  }
+
+  .water-background {
+    background:
+      radial-gradient(ellipse at 15% 10%, rgba(56, 189, 248, 0.5) 0%, transparent 45%),
+      radial-gradient(ellipse at 85% 20%, rgba(14, 165, 233, 0.32) 0%, transparent 48%),
+      radial-gradient(ellipse at 50% 100%, rgba(8, 145, 178, 0.38) 0%, transparent 55%),
+      linear-gradient(135deg, #eaf9ff 0%, #f7fcff 38%, #dff3ff 70%, #cbeafe 100%);
+  }
+
+  .water-background::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      160deg,
+      rgba(255, 255, 255, 0.24) 0px,
+      rgba(255, 255, 255, 0.24) 1px,
+      transparent 1px,
+      transparent 26px
+    );
+    opacity: 0.35;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 35%, black 70%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 35%, black 70%, transparent 100%);
+  }
+
+  .dark .water-background {
+    background:
+      radial-gradient(ellipse at 15% 10%, rgba(14, 165, 233, 0.26) 0%, transparent 45%),
+      radial-gradient(ellipse at 85% 20%, rgba(8, 145, 178, 0.22) 0%, transparent 48%),
+      radial-gradient(ellipse at 50% 100%, rgba(3, 105, 161, 0.32) 0%, transparent 58%),
+      linear-gradient(135deg, #020617 0%, #082f49 48%, #0c4a6e 100%);
+  }
+
+  .dark .water-background::after {
+    background-image: repeating-linear-gradient(
+      160deg,
+      rgba(125, 211, 252, 0.12) 0px,
+      rgba(125, 211, 252, 0.12) 1px,
+      transparent 1px,
+      transparent 26px
+    );
+    opacity: 0.22;
+  }
+
   .btn-primary {
     @apply inline-flex items-center justify-center rounded-xl border border-white/30 bg-gradient-to-r from-primary-600 to-sky-500 px-6 py-3 font-medium text-white shadow-lg shadow-primary-600/20 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
   }
@@ -108,5 +159,12 @@
 
   .animate-delay-500 {
     animation-delay: 500ms;
+  }
+
+  .animate-fade-in,
+  .animate-slide-up,
+  .animate-slide-down,
+  .animate-scale-in {
+    animation-fill-mode: both;
   }
 }

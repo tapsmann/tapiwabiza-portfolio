@@ -5,7 +5,9 @@ A modern, responsive, static portfolio website built with Next.js 14, TypeScript
 ## Features
 
 - Glassmorphism-inspired design with aligned, responsive containers
+- Blue water inspired gradient background that adapts to light and dark mode
 - Captured project preview screenshots, including authenticated anti-poaching dashboards
+- Expanded footer with pages, project links, contact details, and social icons
 - Dark/light mode toggle that remembers the selected theme
 - Fully responsive layout for desktop, tablet, and mobile
 - CSS-based animations with no extra UI animation dependency
