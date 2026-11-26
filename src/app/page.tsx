@@ -2,6 +2,7 @@
 
 import { useState, useEffect, type FormEvent } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import {
   Mail,
   Phone,
@@ -116,24 +117,37 @@ const projects = [
     status: 'Live',
     link: 'https://martruther-dev.vercel.app',
     githubLink: null,
+    image: null,
   },
   {
     name: 'Prospira-Edu Educational Platform',
     description:
       'Built an interactive educational website using HTML, CSS, JavaScript, and SQL. Designed database structures for user management and content delivery so educators can manage and share learning materials.',
     tech: ['HTML', 'CSS', 'JavaScript', 'SQL'],
-    status: 'Completed',
-    link: null,
+    status: 'Live',
+    link: 'https://prospira-edu.vercel.app',
     githubLink: null,
+    image: '/projects/prospira-edu.png',
   },
   {
-    name: 'Anti-Poaching Detection System',
+    name: 'ZimParks Anti-Poaching System',
     description:
       'Developed an academic system to detect and prevent wildlife poaching activities, applying programming, data analysis, and system design to a real-world conservation challenge.',
     tech: ['Programming', 'Data Analysis', 'System Design'],
-    status: 'Academic Project',
-    link: null,
+    status: 'Live Demo',
+    link: 'https://anti-poaching-system.vercel.app',
     githubLink: null,
+    image: '/projects/anti-poaching-system.png',
+  },
+  {
+    name: 'Destiny for Women Zimbabwe',
+    description:
+      'Created a prototype website for the DWYE Empowerment Trust, showcasing programs, impact statistics, and contact details for a women and youth empowerment organisation.',
+    tech: ['HTML', 'CSS', 'GitHub Pages'],
+    status: 'Prototype',
+    link: 'https://tapsmann.github.io/destiny-for-women.org',
+    githubLink: null,
+    image: '/projects/destiny-for-women.png',
   },
 ]
 
@@ -219,12 +233,22 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
+    const storedTheme = window.localStorage.getItem('theme')
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+    setIsDark(storedTheme ? storedTheme === 'dark' : prefersDark)
+  }, [])
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', isDark)
   }, [isDark])
+
+  const toggleTheme = () => {
+    setIsDark((current) => {
+      const next = !current
+      window.localStorage.setItem('theme', next ? 'dark' : 'light')
+      return next
+    })
+  }
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id)
@@ -261,11 +285,19 @@ export default function Home() {
   ]
 
   return (
-    <div className="min-h-screen bg-white dark:bg-dark-950 transition-colors duration-300">
+    <div className="relative isolate min-h-screen overflow-hidden bg-slate-50 transition-colors duration-300 dark:bg-dark-950">
+      {/* Glassmorphism background */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute -left-40 -top-40 h-[32rem] w-[32rem] rounded-full bg-primary-300/40 blur-3xl dark:bg-primary-800/25" />
+        <div className="absolute -right-52 top-1/4 h-[36rem] w-[36rem] rounded-full bg-cyan-300/30 blur-3xl dark:bg-cyan-700/20" />
+        <div className="absolute -bottom-40 left-1/3 h-[30rem] w-[30rem] rounded-full bg-violet-300/30 blur-3xl dark:bg-violet-700/20" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.55),transparent_55%)] dark:bg-[radial-gradient(circle_at_top,rgba(148,163,184,0.08),transparent_55%)]" />
+      </div>
+
       {/* Navigation */}
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled ? 'bg-white/90 dark:bg-dark-950/90 backdrop-blur-md shadow-sm' : 'bg-transparent'
+        className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 ${
+          scrolled ? 'glass-nav' : 'border-b border-transparent bg-transparent'
         }`}
       >
         <div className="container-custom">
@@ -292,9 +324,10 @@ export default function Home() {
                 </button>
               ))}
               <button
-                onClick={() => setIsDark(!isDark)}
-                className="p-2 rounded-lg text-dark-600 dark:text-dark-300 hover:bg-dark-100 dark:hover:bg-dark-800 transition-colors"
+                onClick={toggleTheme}
+                className="rounded-xl border border-white/60 bg-white/50 p-2 text-dark-600 backdrop-blur-md transition-colors hover:bg-white/80 dark:border-white/10 dark:bg-white/5 dark:text-dark-300 dark:hover:bg-white/10"
                 aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+                aria-pressed={isDark}
               >
                 {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
               </button>
@@ -302,15 +335,16 @@ export default function Home() {
 
             <div className="lg:hidden flex items-center space-x-4">
               <button
-                onClick={() => setIsDark(!isDark)}
-                className="p-2 rounded-lg text-dark-600 dark:text-dark-300 hover:bg-dark-100 dark:hover:bg-dark-800 transition-colors"
+                onClick={toggleTheme}
+                className="rounded-xl border border-white/60 bg-white/50 p-2 text-dark-600 backdrop-blur-md transition-colors hover:bg-white/80 dark:border-white/10 dark:bg-white/5 dark:text-dark-300 dark:hover:bg-white/10"
                 aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+                aria-pressed={isDark}
               >
                 {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
               </button>
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 rounded-lg text-dark-600 dark:text-dark-300 hover:bg-dark-100 dark:hover:bg-dark-800 transition-colors"
+                className="rounded-xl border border-white/60 bg-white/50 p-2 text-dark-600 backdrop-blur-md transition-colors hover:bg-white/80 dark:border-white/10 dark:bg-white/5 dark:text-dark-300 dark:hover:bg-white/10"
                 aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
                 aria-expanded={mobileMenuOpen}
               >
@@ -319,14 +353,34 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        {mobileMenuOpen && (
+          <div className="glass-nav border-t border-white/40 dark:border-white/10 lg:hidden">
+            <div className="container-custom grid gap-1 py-4">
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className={`rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors ${
+                    activeSection === item.id
+                      ? 'bg-primary-100/70 text-primary-700 dark:bg-primary-400/10 dark:text-primary-300'
+                      : 'text-dark-600 hover:bg-white/60 dark:text-dark-300 dark:hover:bg-white/10'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}
       <section id="home" className="min-h-screen flex items-center justify-center pt-16 lg:pt-20">
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <div className="animate-slide-up">
-              <p className="text-primary-600 dark:text-primary-400 font-medium mb-4">Computing Student & Developer</p>
+            <div className="glass-panel animate-slide-up p-6 sm:p-8 lg:p-10">
+              <p className="mb-4 font-medium text-primary-600 dark:text-primary-400">Computing Student & Developer</p>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-dark-900 dark:text-white leading-tight mb-6">
                 Tapiwa Jairos Biza
               </h1>
@@ -370,7 +424,7 @@ export default function Home() {
 
             <div className="relative animate-slide-up animate-delay-200">
               <div className="relative z-10">
-                <div className="aspect-square max-w-md mx-auto bg-gradient-to-br from-primary-100 to-primary-200 dark:from-primary-900/30 dark:to-primary-800/30 rounded-3xl border border-primary-200 dark:border-primary-800 flex items-center justify-center">
+                <div className="glass-panel mx-auto flex aspect-square max-w-md items-center justify-center rounded-3xl bg-gradient-to-br from-primary-100/70 to-primary-200/50 dark:from-primary-900/30 dark:to-primary-800/20">
                   <div className="text-center p-8">
                     <Code className="w-24 h-24 mx-auto mb-4 text-primary-600 dark:text-primary-400 opacity-80" />
                     <p className="text-lg font-medium text-dark-700 dark:text-dark-300">Full Stack Developer</p>
@@ -380,21 +434,21 @@ export default function Home() {
               </div>
               {/* Floating skill badges */}
               <div className="absolute -top-4 -right-4 w-32 h-32">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-white dark:bg-dark-900 rounded-2xl border border-dark-100 dark:border-dark-800 shadow-lg p-3 animate-fade-in animate-delay-300">
+                <div className="absolute top-0 right-0 w-24 h-24 glass-panel rounded-2xl p-3 animate-fade-in animate-delay-300">
                   <Database className="w-5 h-5 text-primary-600 dark:text-primary-400 mb-1" />
                   <p className="text-xs font-medium text-dark-900 dark:text-white">SQL</p>
                   <p className="text-[10px] text-dark-500 dark:text-dark-400">Databases</p>
                 </div>
               </div>
               <div className="absolute bottom-4 -left-4 w-32 h-32">
-                <div className="absolute bottom-0 left-0 w-24 h-24 bg-white dark:bg-dark-900 rounded-2xl border border-dark-100 dark:border-dark-800 shadow-lg p-3 animate-fade-in animate-delay-400">
+                <div className="absolute bottom-0 left-0 w-24 h-24 glass-panel rounded-2xl p-3 animate-fade-in animate-delay-400">
                   <Server className="w-5 h-5 text-primary-600 dark:text-primary-400 mb-1" />
                   <p className="text-xs font-medium text-dark-900 dark:text-white">AWS</p>
                   <p className="text-[10px] text-dark-500 dark:text-dark-400">Networking</p>
                 </div>
               </div>
               <div className="absolute top-1/2 right-0 w-32 h-32">
-                <div className="absolute top-1/2 right-0 w-24 h-24 bg-white dark:bg-dark-900 rounded-2xl border border-dark-100 dark:border-dark-800 shadow-lg p-3 animate-fade-in animate-delay-500">
+                <div className="absolute top-1/2 right-0 w-24 h-24 glass-panel rounded-2xl p-3 animate-fade-in animate-delay-500">
                   <Wrench className="w-5 h-5 text-primary-600 dark:text-primary-400 mb-1" />
                   <p className="text-xs font-medium text-dark-900 dark:text-white">IT Support</p>
                   <p className="text-[10px] text-dark-500 dark:text-dark-400">Troubleshooting</p>
@@ -420,61 +474,95 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid auto-rows-fr gap-6 md:grid-cols-2">
             {projects.map((project, index) => (
-              <article key={index} className="card group animate-slide-up" style={{ animationDelay: `${index * 100}ms` }}>
-                <div className="flex items-center gap-2 mb-3">
+              <article
+                key={index}
+                className="card group flex h-full animate-slide-up flex-col"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <div className="relative mb-5 aspect-[16/9] overflow-hidden rounded-xl border border-white/60 dark:border-white/10">
+                  {project.image ? (
+                    <Image
+                      src={project.image}
+                      alt={`${project.name} website preview`}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="flex h-full items-center justify-center bg-gradient-to-br from-primary-100/70 via-sky-100/60 to-violet-100/60 dark:from-primary-900/30 dark:via-sky-900/20 dark:to-violet-900/30">
+                      <Code className="h-12 w-12 text-primary-600 dark:text-primary-300" />
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-dark-950/30 via-transparent to-transparent" />
+                </div>
+
+                <div className="mb-3 flex flex-wrap items-center gap-2">
                   {project.status === 'Live' && (
-                    <span className="px-2 py-0.5 text-xs font-medium bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 rounded-full">
+                    <span className="rounded-full border border-green-200/70 bg-green-100/70 px-2.5 py-1 text-xs font-medium text-green-700 backdrop-blur-md dark:border-green-400/20 dark:bg-green-400/10 dark:text-green-300">
                       Live
                     </span>
                   )}
+                  {project.status === 'Live Demo' && (
+                    <span className="rounded-full border border-emerald-200/70 bg-emerald-100/70 px-2.5 py-1 text-xs font-medium text-emerald-700 backdrop-blur-md dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+                      Live Demo
+                    </span>
+                  )}
                   {project.status === 'Completed' && (
-                    <span className="px-2 py-0.5 text-xs font-medium bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 rounded-full">
+                    <span className="rounded-full border border-blue-200/70 bg-blue-100/70 px-2.5 py-1 text-xs font-medium text-blue-700 backdrop-blur-md dark:border-blue-400/20 dark:bg-blue-400/10 dark:text-blue-300">
                       Completed
                     </span>
                   )}
                   {project.status === 'Academic Project' && (
-                    <span className="px-2 py-0.5 text-xs font-medium bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400 rounded-full">
+                    <span className="rounded-full border border-purple-200/70 bg-purple-100/70 px-2.5 py-1 text-xs font-medium text-purple-700 backdrop-blur-md dark:border-purple-400/20 dark:bg-purple-400/10 dark:text-purple-300">
                       Academic
                     </span>
                   )}
+                  {project.status === 'Prototype' && (
+                    <span className="rounded-full border border-amber-200/70 bg-amber-100/70 px-2.5 py-1 text-xs font-medium text-amber-700 backdrop-blur-md dark:border-amber-400/20 dark:bg-amber-400/10 dark:text-amber-300">
+                      Prototype
+                    </span>
+                  )}
                 </div>
-                <h3 className="text-lg font-semibold text-dark-900 dark:text-white mb-3 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+
+                <h3 className="mb-3 text-lg font-semibold text-dark-900 transition-colors group-hover:text-primary-600 dark:text-white dark:group-hover:text-primary-400">
                   {project.name}
                 </h3>
-                <p className="text-dark-600 dark:text-dark-300 mb-4 leading-relaxed">
+                <p className="mb-4 grow leading-relaxed text-dark-600 dark:text-dark-300">
                   {project.description}
                 </p>
-                <div className="flex flex-wrap gap-2 mb-4">
+                <div className="mb-5 flex flex-wrap gap-2">
                   {project.tech.map((tech, techIndex) => (
-                    <span key={techIndex} className="px-2 py-1 text-xs font-medium bg-dark-100 dark:bg-dark-800 text-dark-600 dark:text-dark-300 rounded">
+                    <span key={techIndex} className="glass-chip">
                       {tech}
                     </span>
                   ))}
                 </div>
-                {project.link && (
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors group"
-                  >
-                    View Project
-                    <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1 group-hover:translate-y-[-1px]" />
-                  </a>
-                )}
-                {project.githubLink && (
-                  <a
-                    href={project.githubLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-xs font-medium text-primary-500 dark:text-primary-400 hover:text-primary-300 transition-colors group mt-2"
-                  >
-                    <Github className="w-3.5 h-3.5" />
-                    View Source
-                  </a>
-                )}
+                <div className="mt-auto flex flex-col items-start gap-2">
+                  {project.link && (
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-sm font-medium text-primary-600 transition-colors hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
+                    >
+                      View Project
+                      <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1 group-hover:translate-y-[-1px]" />
+                    </a>
+                  )}
+                  {project.githubLink && (
+                    <a
+                      href={project.githubLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-xs font-medium text-primary-500 transition-colors hover:text-primary-300"
+                    >
+                      <Github className="h-3.5 w-3.5" />
+                      View Source
+                    </a>
+                  )}
+                </div>
               </article>
             ))}
           </div>
@@ -482,7 +570,7 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="section bg-dark-50 dark:bg-dark-900">
+      <section id="about" className="section bg-white/40 backdrop-blur-sm dark:bg-white/[0.03]">
         <div className="container-custom">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="section-title">About Me</h2>
@@ -586,7 +674,7 @@ export default function Home() {
       </section>
 
       {/* Experience Section */}
-      <section id="experience" className="section bg-dark-50 dark:bg-dark-900">
+      <section id="experience" className="section bg-white/40 backdrop-blur-sm dark:bg-white/[0.03]">
         <div className="container-custom">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="section-title">Experience</h2>
@@ -626,7 +714,7 @@ export default function Home() {
       </section>
 
       {/* Education Section */}
-      <section id="education" className="section bg-dark-50 dark:bg-dark-900">
+      <section id="education" className="section bg-white/40 backdrop-blur-sm dark:bg-white/[0.03]">
         <div className="container-custom">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="section-title">Education</h2>
@@ -664,8 +752,8 @@ export default function Home() {
               <div className="card">
                 <h3 className="text-lg font-semibold text-dark-900 dark:text-white mb-4">Contact Information</h3>
                 <div className="space-y-4">
-                  <a href="mailto:tapiwajairosbiza@gmail.com" className="flex items-center gap-4 p-3 bg-dark-50 dark:bg-dark-800 rounded-lg hover:bg-dark-100 dark:hover:bg-dark-700 transition-colors group">
-                    <div className="w-10 h-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
+                  <a href="mailto:tapiwajairosbiza@gmail.com" className="glass-chip w-full justify-start gap-4 p-3 text-left transition hover:bg-white/80 dark:hover:bg-white/10">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-primary-200/70 bg-primary-100/70 text-primary-600 backdrop-blur-md transition-transform group-hover:scale-105 dark:border-primary-400/20 dark:bg-primary-400/10 dark:text-primary-300">
                       <Mail className="w-5 h-5 text-primary-600 dark:text-primary-400" />
                     </div>
                     <div>
@@ -673,8 +761,8 @@ export default function Home() {
                       <p className="font-medium text-dark-900 dark:text-white">tapiwajairosbiza@gmail.com</p>
                     </div>
                   </a>
-                  <a href="tel:+263782585268" className="flex items-center gap-4 p-3 bg-dark-50 dark:bg-dark-800 rounded-lg hover:bg-dark-100 dark:hover:bg-dark-700 transition-colors group">
-                    <div className="w-10 h-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
+                  <a href="tel:+263782585268" className="glass-chip w-full justify-start gap-4 p-3 text-left transition hover:bg-white/80 dark:hover:bg-white/10">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-primary-200/70 bg-primary-100/70 text-primary-600 backdrop-blur-md transition-transform group-hover:scale-105 dark:border-primary-400/20 dark:bg-primary-400/10 dark:text-primary-300">
                       <Phone className="w-5 h-5 text-primary-600 dark:text-primary-400" />
                     </div>
                     <div>
@@ -682,8 +770,8 @@ export default function Home() {
                       <p className="font-medium text-dark-900 dark:text-white">+263 78 258 5268 / +263 77 278 9236</p>
                     </div>
                   </a>
-                  <div className="flex items-center gap-4 p-3 bg-dark-50 dark:bg-dark-800 rounded-lg">
-                    <div className="w-10 h-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                  <div className="glass-chip w-full justify-start gap-4 p-3 text-left">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-primary-200/70 bg-primary-100/70 text-primary-600 backdrop-blur-md dark:border-primary-400/20 dark:bg-primary-400/10 dark:text-primary-300">
                       <MapPin className="w-5 h-5 text-primary-600 dark:text-primary-400" />
                     </div>
                     <div>
@@ -701,7 +789,7 @@ export default function Home() {
                     href="https://github.com/tapsmann"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 bg-dark-100 dark:bg-dark-800 text-dark-700 dark:text-dark-300 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/30 hover:text-primary-700 dark:hover:text-primary-400 transition-colors group"
+                    className="glass-chip gap-2 px-4 py-2 transition hover:bg-primary-100/70 hover:text-primary-700 dark:hover:bg-primary-400/10 dark:hover:text-primary-300"
                   >
                     <Github className="w-4 h-4 group-hover:scale-110 transition-transform" />
                     GitHub
@@ -710,7 +798,7 @@ export default function Home() {
                     href="https://linkedin.com/in/tapiwa-biza"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 bg-dark-100 dark:bg-dark-800 text-dark-700 dark:text-dark-300 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/30 hover:text-primary-700 dark:hover:text-primary-400 transition-colors group"
+                    className="glass-chip gap-2 px-4 py-2 transition hover:bg-primary-100/70 hover:text-primary-700 dark:hover:bg-primary-400/10 dark:hover:text-primary-300"
                   >
                     <Linkedin className="w-4 h-4 group-hover:scale-110 transition-transform" />
                     LinkedIn
@@ -732,7 +820,7 @@ export default function Home() {
                       id="name"
                       name="name"
                       required
-                      className="w-full px-4 py-3 bg-white dark:bg-dark-900 border border-dark-200 dark:border-dark-700 rounded-lg text-dark-900 dark:text-white placeholder-dark-400 dark:placeholder-dark-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                      className="field"
                       placeholder="Your Name"
                     />
                   </div>
@@ -745,7 +833,7 @@ export default function Home() {
                       id="email"
                       name="email"
                       required
-                      className="w-full px-4 py-3 bg-white dark:bg-dark-900 border border-dark-200 dark:border-dark-700 rounded-lg text-dark-900 dark:text-white placeholder-dark-400 dark:placeholder-dark-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                      className="field"
                       placeholder="your@email.com"
                     />
                   </div>
@@ -759,7 +847,7 @@ export default function Home() {
                     id="subject"
                     name="subject"
                     required
-                    className="w-full px-4 py-3 bg-white dark:bg-dark-900 border border-dark-200 dark:border-dark-700 rounded-lg text-dark-900 dark:text-white placeholder-dark-400 dark:placeholder-dark-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                    className="field"
                     placeholder="Project Inquiry / ICT Attachment / Other"
                   />
                 </div>
@@ -772,7 +860,7 @@ export default function Home() {
                     name="message"
                     rows={5}
                     required
-                    className="w-full px-4 py-3 bg-white dark:bg-dark-900 border border-dark-200 dark:border-dark-700 rounded-lg text-dark-900 dark:text-white placeholder-dark-400 dark:placeholder-dark-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-none"
+                    className="field resize-none"
                     placeholder="Tell me about your project or opportunity..."
                   ></textarea>
                 </div>

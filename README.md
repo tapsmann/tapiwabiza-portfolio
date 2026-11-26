@@ -4,7 +4,8 @@ A modern, responsive, static portfolio website built with Next.js 14, TypeScript
 
 ## Features
 
-- Modern, professional design with dark/light mode
+- Glassmorphism-inspired design with aligned, responsive containers
+- Dark/light mode toggle that remembers the selected theme
 - Fully responsive layout for desktop, tablet, and mobile
 - CSS-based animations with no extra UI animation dependency
 - Semantic HTML, labels, and ARIA attributes
@@ -82,7 +83,9 @@ src/
 │   ├── layout.tsx       # Root layout and metadata
 │   └── page.tsx         # Portfolio page and content data
 ├── components/          # Reusable components
-public/                  # Static assets
+public/
+├── favicon.svg          # Site icon
+└── projects/            # Captured screenshots used in project cards
 ```
 
 ## Customization
